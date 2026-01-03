@@ -6,6 +6,7 @@
 // \\inline pros::Controller master;
 
 // Drivetrain Side defs
+// Defined from front to back
 inline pros::MotorGroup leftDrive({-18, 8, -9}, pros::MotorGear::blue, pros::MotorUnits::deg);
 inline pros::MotorGroup rightDrive({7, -6, 21}, pros::MotorGear::blue, pros::MotorUnits::deg);
 
@@ -28,7 +29,7 @@ inline pros::Rotation verticalOdom(20);
 inline pros::Imu imu(19);
 
 inline lemlib::TrackingWheel horizontal_tracking_wheel(&horizontalOdom, 2.0, -0.5);
-inline lemlib::TrackingWheel vertical_tracking_wheel(&verticalOdom, 2.0, -.7);
+inline lemlib::TrackingWheel vertical_tracking_wheel(&verticalOdom, 2.125, -.7);
 
 inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
                             nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs

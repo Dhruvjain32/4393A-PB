@@ -39,12 +39,6 @@ void heightMiddle() {
     backScorePneumatic.retract();
 }
 
-void motorStore() {
-    intake.move(127);
-    pivot.move(-127);
-    backScore.move(-127);
-}
-
 void stopScore() {
     intake.move(0);
     pivot.move(0);
@@ -63,15 +57,70 @@ void testTurn() {
     chassis.turnToHeading(0, 100000, {.maxSpeed = 110});
 }
 void blueSAWP() {
-    chassis.setPose(0, 0, 270);
+    chassis.setPose(0, 0, 90);
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
 
-
     // angle self with loader, turn storing on
-    moveStraight(32, 1700, {.forwards = true, .maxSpeed = 110});
+    moveStraight(33.5, 1700, {.forwards = true, .maxSpeed = 110});
+    chassis.turnToHeading(180, 700, {});
+    storing.toggle(); // enabled
+    scoreBack();
 
+    // Drive into matchloader and grab 3 blocks
+    moveStraight(13.5, 1500, {.forwards = true, .maxSpeed = 90});
+    loader.toggle(); //enabled
+    pros::delay(2000);
 
+    // move to goal and score
+    moveStraight(-26, 1000, {.forwards = false, .maxSpeed = 110});
+    loader.toggle(); // disabled
+    chassis.waitUntilDone();
+    storing.toggle(); // disabled
+    pros::delay(500);
+    
+    // Turn to blocks and drive to grab both sets of blocks
+    chassis.turnToHeading(270, 1000, {.direction = AngularDirection::CCW_COUNTERCLOCKWISE});
+    moveStraight(72 , 3000, {.forwards = true, .maxSpeed = 120});
+    
+    // Enable storing and turn loader on at each set of blocks
+    storing.toggle(); // enabled
 
+    pros::delay(1500);
+    loader.toggle(); // enabled
+    pros::delay(250);
+    loader.toggle(); // disabled
+
+    pros::delay(500);
+    loader.toggle(); // enabled
+    pros::delay(250);
+    loader.toggle(); // disabled
+
+    // Turn to tall Mid goal and score (Score only 3 blocks)
+    chassis.turnToHeading(235, 350, {.direction = AngularDirection::CW_CLOCKWISE});
+    moveStraight(-13.5, 2000, {.forwards = false, .maxSpeed = 110});
+    scoreBack();
+    pros::delay(750); // Tune time getting to mid goal !!!!!!!!!!!!!!!!!!
+    storage.toggle(); // disabled
+    pros::delay(750); // tune time for scoring only 3 blocks !!!!!!!!!!!!
+    stopScore();
+    storage.toggle(); // enabled
+
+    // Drive and turn to be aligned with match loader
+    moveStraight(48, 1500, {.forwards = true, .maxSpeed = 110});
+    chassis.turnToHeading(180, 1000, {.direction = AngularDirection::CCW_COUNTERCLOCKWISE});
+    
+    // Drive into match loader and grab 3 more blocks
+    storing.toggle(); // enabled
+    loader.toggle(); // enabled
+    moveStraight(13.5, 1500, {.forwards = true, .maxSpeed = 80});
+    delay(1400);
+
+    // Drive into long goal and score blocks
+    moveStraight(-26, 1500, {.forwards = false, .maxSpeed = 110});
+    loader.toggle(); // disabled
+    scoreBack();
+    pros::delay(750);
+    storing.toggle(); // disabled
 }
 void blueLeft() {
     chassis.setPose(0, 0, 270);
