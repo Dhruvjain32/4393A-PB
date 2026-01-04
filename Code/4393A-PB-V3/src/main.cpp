@@ -133,6 +133,7 @@ switch (selectedAuton) {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
 void opcontrol() {
 	while (true) {
 
@@ -202,13 +203,14 @@ void opcontrol() {
             loader.toggle();
         }
 
-        // if(master.get_digital_new_press(DIGITAL_L2)) {
-        //     storing.toggle();
-        // }
+        if(master.get_digital_new_press(DIGITAL_L2)) {
+            storing.toggle();
+        }
 
         if(master.get_battery_level() < 20 || pros::battery::get_capacity() < 30) {
             master.rumble("..");
         }
+
         // delay to save resources
         pros::delay(10);
     }
