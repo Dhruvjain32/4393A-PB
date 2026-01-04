@@ -405,6 +405,61 @@ void skills() {
     chassis.setPose(0, 0, 270);
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
 
+    chassis.setPose(0, 0, 90);
+    chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+
+    // angle self with loader, turn storing on
+    moveStraight(33.5, 1700, {.forwards = true, .maxSpeed = 110});
+    chassis.turnToHeading(180, 700, {});
+    storing.toggle(); // enabled
+    scoreBack();
+
+    // Drive into matchloader and grab 6 blocks
+    moveStraight(13.5, 1500, {.forwards = true, .maxSpeed = 90});
+    loader.toggle(); //enabled
+    pros::delay(2000); // adjust time as needed to load all 6 blocks
+    loader.toggle(); // disabled
+
+    // Move to outer wall
+    moveStraight(-13.5, 1000, {.forwards = false, .maxSpeed = 110});
+    chassis.turnToHeading(315, 1000, {.direction = AngularDirection::CW_CLOCKWISE});
+    moveStraight(21, 1500, {.forwards = true, .maxSpeed = 110});
+
+    // Drive to other side of field
+    chassis.turnToHeading(0, 350, {.direction = AngularDirection::CW_CLOCKWISE});
+    moveStraight(96, 5000, {.forwards = true, .maxSpeed = 110});
+    chassis.turnToHeading(45, 1000, {.direction = AngularDirection::CW_CLOCKWISE});
+    moveStraight(21.5, 1500, {.forwards = false, .maxSpeed = 110});
+
+    // align with the goal and score
+    chassis.turnToHeading(0, 1000, {.direction = AngularDirection::CW_CLOCKWISE});
+    moveStraight(-15, 1500, {.forwards = true, .maxSpeed = 110});
+    chassis.waitUntilDone();
+    storing.toggle(); // disabled
+    pros::delay(2000); // tune time for scoring all 6 blocks !!!!!!!!!!!!
+    stopScore();
+
+    // Move to loader and grab 6 more blocks
+    moveStraight(26, 1000, {.forwards = false, .maxSpeed = 110});
+    storing.toggle(); // enabled
+    loader.toggle(); // enabled
+    pros::delay(2000); // adjust time as needed to load all 6 blocks
+
+    // Move to goal and score
+    moveStraight(-26, 1000, {.forwards = false, .maxSpeed = 110});
+    loader.toggle(); // disabled
+    chassis.waitUntilDone();
+    storing.toggle(); // disabled
+    pros::delay(2000); // tune time for scoring all 6 blocks !!!!!!!!!
+
+
+
+
+
+
+
+
+
     // angle self with loader, turn storing on
     moveStraight(32, 1700, {.forwards = true, .maxSpeed = 110});
     storing.toggle(); // enabled
